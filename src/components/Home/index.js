@@ -1,10 +1,10 @@
 import React from 'react'
-import { Category } from '../Category'
+import { ListCategories } from '../ListCategories'
 
 export const Home = () => {
   return (
     <>
-      <Category />
+      <ListCategories />
     </>
   )
 }
