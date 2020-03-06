@@ -13,6 +13,9 @@ export const GlobalStyles = createGlobalStyle`
         ul, li, h1, h2, h3, p, button {
                 margin: 0;
         }
+        a{
+                text-decoration: none;
+        }
 
         ul {
                 list-style: none;
