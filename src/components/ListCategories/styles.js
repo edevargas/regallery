@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { bounceDown } from '../../styles/animation'
 
 export const SList = styled.ul`
   display: flex;
@@ -9,6 +10,7 @@ export const SList = styled.ul`
   }
   -ms-overflow-style: none;
   &.fixed{
+    ${bounceDown({ pos: -20 })}
     background: #fff;
     border-radius:60px;
     box-shadow: 0 0 20px rgba(0,0,0,0.3);
