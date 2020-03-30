@@ -1,19 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import { Category } from '../Category'
 import { SList, SItem } from './styles'
-import httpClient from '../../httpClient'
+import { useCategoriesData } from '../../hooks/useCategoriesData'
 
 export const ListCategories = () => {
-  const [categories, setCategories] = useState([])
   const [showFixed, setShowFixed] = useState(false)
-  const [error, setError] = useState('')
-
-  /**
-   * Get categories
-   */
-  useEffect(() => {
-    if (categories.length === 0) fetchData()
-  }, [])
+  const { categories, error, loading } = useCategoriesData()
 
   /**
    * Detect if scroll > 200
@@ -30,26 +22,22 @@ export const ListCategories = () => {
     return () => document.removeEventListener('scroll', onScroll)
   })
 
-  const fetchData = async () => {
-    try {
-      const response = await httpClient.get('categories', {})
-      setCategories(response)
-    } catch (error) {
-      setError(error.message)
-    }
-  }
-
   const fillContent = fixed => {
-    if (categories.length === 0 && !error) return 'Loading categories'
     if (error) return `Categories Error: ${error}`
 
     return (
-      <SList className={fixed ? 'fixed' : ''}>
-        {categories.map(category => (
-          <SItem key={category.id}>
-            <Category {...category} />
-          </SItem>
-        ))}
+      <SList fixed={fixed}>
+        {loading
+          ? [1, 2, 3, 4, 5].map(num => (
+            <SItem key={num}>
+              <Category />
+            </SItem>
+          ))
+          : categories.map(category => (
+            <SItem key={category.id}>
+              <Category {...category} />
+            </SItem>
+          ))}
       </SList>
     )
   }

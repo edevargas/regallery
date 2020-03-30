@@ -10,8 +10,14 @@ const fadeInKeyframes = keyframes`
         opacity: 1;
     }
 `
-export const fadeIn = ({ time = '1s', type = 'ease' } = {}) => css`
-  animation: ${time} ${fadeInKeyframes} ${type};
+
+const placeHolderShimmer = keyframes`
+    0%{
+        background-position: -490px 0
+    }
+    100%{
+        background-position: 490px 0
+    }
 `
 const bounceDownKeyFrames = pos =>
   keyframes`
@@ -36,7 +42,44 @@ const bounceDownKeyFrames = pos =>
   }
 `
 
+export const fadeIn = ({ time = '1s', type = 'ease' } = {}) => css`
+  animation: ${time} ${fadeInKeyframes} ${type};
+`
+
 export const bounceDown = ({ time = '1s', type = 'ease', pos = '0' } = {}) =>
   css`
     animation: ${time} ${bounceDownKeyFrames(pos)} ${type};
+  `
+
+export const skeletonAnimation = ({
+  time = '10s',
+  fill = 'forwards',
+  iteration = 'infinite',
+  timingFunction = 'linear',
+  colorBackground = '#f2f2f2',
+  colorAnimation = '#eeeeee'
+} = {}) =>
+  css`
+    animation-duration: ${time};
+    animation-fill-mode: ${fill};
+    animation-iteration-count: ${iteration};
+    animation-name: ${placeHolderShimmer};
+    animation-timing-function: ${timingFunction};
+    background-image: -webkit-gradient(
+      linear,
+      left center,
+      right center,
+      from(${colorBackground}),
+      color-stop(0.2, ${colorAnimation}),
+      color-stop(0.4, ${colorAnimation}),
+      to(${colorBackground})
+    );
+    background-image: -webkit-linear-gradient(
+      left,
+      ${colorBackground} 0%,
+      ${colorAnimation} 20%,
+      ${colorBackground} 40%,
+      ${colorBackground} 100%
+    );
+    position: relative;
   `

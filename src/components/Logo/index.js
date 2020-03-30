@@ -4,8 +4,6 @@ import { Ssvg } from './styles'
 export const Logo = props => {
   return (
     <Ssvg
-      width={151.52}
-      height={113.64}
       viewBox='174.24 18.18 151.52 113.64'
       style={{
         background: '0 0'
